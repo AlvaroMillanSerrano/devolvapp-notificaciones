@@ -11,29 +11,27 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class RabbitConfig {
-
-    public static final String EXCHANGE = "demo.exchange";
-    public static final String QUEUE = "demo.queue";
-    public static final String ROUTING_KEY = "demo.key";
+    public static final String EXCHANGE = "email.exchange";
+    public static final String QUEUE = "email.queue";
+    public static final String ROUTING_KEY = "email.key";
 
     @Bean
-    DirectExchange demoExchange() {
+    DirectExchange emailExchange() {
         return new DirectExchange(EXCHANGE);
     }
 
     @Bean
-    Queue demoQueue() {
+    Queue emailQueue() {
         return new Queue(QUEUE, true);
     }
 
     @Bean
-    Binding demoBinding(Queue demoQueue, DirectExchange demoExchange) {
-        return BindingBuilder.bind(demoQueue).to(demoExchange).with(ROUTING_KEY);
+    Binding emailBinding(Queue emailQueue, DirectExchange emailExchange) {
+        return BindingBuilder.bind(emailQueue).to(emailExchange).with(ROUTING_KEY);
     }
 
     @Bean
     MessageConverter messageConverter() {
         return new JacksonJsonMessageConverter();
     }
-
 }
