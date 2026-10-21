@@ -4,5 +4,14 @@ spring:
     port: 5672
     username: demo
     password: demo
+  mail:
+    host: localhost
+    port: 1025
+    properties:
+      mail:
+        smtp:
+          auth: false
+          starttls:
+            enable: false
 server:
   port: 8081
