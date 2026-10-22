@@ -18,14 +18,24 @@ public class MailService {
 
     private String from = "no-reply@devolvup.com";
 
-    public void sendCollectionCreated(String to, String pedidoId) {
-        sendEmail(to, "Pedido " + pedidoId + " creado",
-                "<h2>Pedido creado</h2><p>Tu pedido <strong>" + pedidoId + "</strong> ha sido creado correctamente.</p>");
+    public void sendCollectionCreated(String email, String collectionId) {
+        sendEmail(email, "Pedido " + collectionId + " creado",
+                "<h2>Pedido creado</h2><p>Tu pedido <strong>" + collectionId + "</strong> ha sido creado correctamente.</p>");
     }
 
-    public void sendCollectionCanceled(String to, String pedidoId) {
-        sendEmail(to, "Pedido " + pedidoId + " cancelado",
-                "<h2>Pedido cancelado</h2><p>Tu pedido <strong>" + pedidoId + "</strong> ha sido cancelado.</p>");
+    public void sendCollectionCanceled(String email, String collectionId) {
+        sendEmail(email, "Pedido " + collectionId + " cancelado",
+                "<h2>Pedido cancelado</h2><p>Tu pedido <strong>" + collectionId + "</strong> ha sido cancelado.</p>");
+    }
+
+    public void sendRegistered(String email) {
+        sendEmail(email, "Registro",
+                "<h2>Registrado</h2><p>Se ha registra en devolvUp correctamente.</p>");
+    }
+
+    public void sendIncident(String email, String collectionId) {
+        sendEmail(email, "Incidencia",
+                "<h2>Incidencia</h2><p>Ha habido una incidencia en el pedido "+ collectionId +"</p>");
     }
 
     private void sendEmail(String to, String subject, String htmlBody) {

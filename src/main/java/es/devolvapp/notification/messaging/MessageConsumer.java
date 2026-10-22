@@ -19,26 +19,13 @@ public class MessageConsumer {
     public void receive(DevolvMessage message) {
         log.info("Mensaje recibido: {}", message);
 
-        String msg = message.message();
-        String email = extractEmail(msg);
-        String pedidoId = extractCollectionId(msg);
+        String collectionId = message.message();;
 
-        if (msg.contains("creado")) {
-            mailService.sendCollectionCreated(email, pedidoId);
-        } else if (msg.contains("eliminado")) {
-            mailService.sendCollectionCanceled(email, pedidoId);
-        } else {
-            log.warn("Tipo de mensaje desconocido: {}", msg);
+        switch (message.type()) {
+            case "created" -> mailService.sendCollectionCreated(message.email(), collectionId);
+            case "canceled" -> mailService.sendCollectionCanceled(message.email(), collectionId);
+            case "registered" -> mailService.sendRegistered(message.email());
+            case "incident" -> mailService.sendIncident(message.email(), collectionId);
         }
-    }
-
-    private String extractEmail(String msg) {
-        return msg.substring(msg.indexOf("Email: ") + 7).trim();
-    }
-
-    private String extractCollectionId(String msg) {
-        int start = msg.indexOf("Pedido ") + 7;
-        int end = msg.indexOf(' ', start);
-        return msg.substring(start, end);
     }
 }
